@@ -1,0 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;600;700;800&display=swap');
+
+$primary:#1B9CFC;
+$font:'Montserrat',sans-serif;
+$radius:6px;
+$white:#fff;
+$secondary:#d1d8e0;
+
+* {
+    padding:0;
+    margin:0;
+    box-sizing:border-box;
+    font-family:$font;
+}
+
+.container {
+    width:100%;
+    min-width:100%;
+    min-height:100vh;
+    background-color:$primary;
+    display:flex;
+    align-items: center;
+    justify-content:center;
+ 
+     .todo-container {
+        width:28vw;
+        background-color:$white;
+        border-radius:$radius;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+ 
+       .todo-header {
+        padding:1rem 1.5rem;
+
+        .todo-form {
+            position:relative;
+            width:100%;
+              
+              input {
+                border:solid 1.5px $secondary;
+                outline:none;
+                border-radius:4px;
+                width:100%;
+                padding:0.6rem 0.6rem 0.6rem 2.5rem;
+              }
+
+              i {
+                position:absolute;
+                top:10px;
+                color:$secondary;
+                left:12px;
+              }
+        }
+
+        .todo-category {
+            display:flex;
+            align-items: center;
+            justify-content:space-between;
+            margin-top:15px;
+             
+            .todo-side-left-btn{
+                display:flex;
+                align-items: center;
+                column-gap:10px;
+                button {
+                    background:transparent;
+                    border:none;
+                    font-weight:600;
+                    cursor:pointer;
+                    font-size:0.82rem;
+                }
+
+                button.active {
+                    color:$primary;
+                    border-bottom:solid 2px $primary;
+                }
+            }
+
+            #clear{ 
+                background-color: $primary;
+                border:none;
+                outline:none;
+                cursor:pointer;
+                color:#fff;
+                border-radius:4px;
+                padding:0.4rem 0.8rem;
+                font-size:0.80rem;
+                font-weight: 600;
+            }
+        }
+
+        border-bottom:solid 1px $secondary;
+       }
+
+       .todo-content {
+           
+           .alert {
+                 padding:1.5rem;
+                text-align:center;
+                 p {
+                    color:$secondary;
+                    font-size:0.9rem;
+                    font-weight: 600;
+                 }
+             }
+
+             .todo-items {
+                display:flex;
+                flex-direction: column;
+                row-gap:6px;
+                padding:0 1.5rem 1rem;
+                  
+                  .todo-item {
+                    padding:0.7rem 0;
+                    border-bottom:solid 1px $secondary;
+                    position:relative;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    .todo-title {
+                        display:flex;
+                        align-items: center;
+                        column-gap:12px;
+
+                        p{ 
+                            font-weight:500;
+                            font-size:0.80rem;
+                            font-weight:600;
+                          }
+
+                          input[type="checkbox"]{
+                             outline:none;
+                          }
+                    }
+
+                      button {
+                        outline:none;
+                        color:#555;
+                        background:transparent;
+                        border:none;
+                        font-size:1.1rem;
+                        cursor:pointer;
+                      }
+
+                      .wrap-menu {
+                        position:absolute;
+                        right:10px;
+                        padding:0.5rem 1rem;
+                        border-radius: 6px;
+                        top:10px;
+                        background-color: #fff;
+                        display: none;
+                        flex-direction: column;
+                        align-items:flex-start;
+                        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+                        row-gap:6px;
+
+                          button {
+                            display: flex;
+                            column-gap:6px;
+                            font-weight: 500;
+                            align-items: center;
+                            font-size:0.8rem;
+                            color:#555;
+                             i {
+                                font-size:1rem;
+                             }
+                          }
+                      }
+
+                      .wrap-menu.active {
+                        display:flex;
+                      }
+                  }
+             }
+       }
+
+     }
+
+}
