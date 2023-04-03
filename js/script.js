@@ -29,15 +29,15 @@ function renderAlertHtml(message) {
          `;
  }
 
-function renderTodoItemHtml(todo) {
+function renderTodoItemHtml(todo,index) {
     return `
       <div class="todo-item">
         <div class="todo-title">
-        <input ${todo.checked ? "checked" : ""} data-id="${todo.id}" class="check-input" type="checkbox">
+        <input data-type="create" ${todo.checked ? "checked" : ""} data-id="${todo.id}" class="check-input" type="checkbox">
         <p>${todo.title}</p>
         </div>
-        <button class="menu"><i class="ri-more-line"></i></button>
-        <div class="wrap-menu">
+        <button data-index="${index}" class="menu"><i class="ri-more-line"></i></button>
+        <div style="display:none" class="wrap-menu">
           <button class="update-todo-btn" data-id="${todo.id}">
           <i class="ri-edit-line"></i>
           Update
@@ -55,8 +55,8 @@ function renderTodoItemHtml(todo) {
    let temp = '';
 
    if(Array.isArray(todos)) {
-      todos.map((todo) => {
-          temp += renderTodoItemHtml(todo);
+      todos.map((todo,index) => {
+          temp += renderTodoItemHtml(todo, index);
       });
 
      return todoContent.innerHTML = `
@@ -67,20 +67,31 @@ function renderTodoItemHtml(todo) {
    }   
  }
  
- 
 //functionality
 
 function allTodoBehavior() {
   const deleteTodoBtn = document.querySelectorAll('.delete-todo-btn');
+  const updateTodoBtn = document.querySelectorAll('.update-todo-btn');
   const checkInput = document.querySelectorAll('.check-input');
+  const menuButtons = document.querySelectorAll('.menu');
 
   deleteTodoBtn.forEach((button)=>{
      button.addEventListener('click' ,deleteTodo);
   });
 
+  updateTodoBtn.forEach((button) => {
+    button.addEventListener('click'  ,updateTodo);
+  });
+
   checkInput.forEach((input) => {
      input.addEventListener('change' ,checkStatusTypes);
   });
+
+  menuButtons.forEach(button => {
+     button.addEventListener('click' , openMenu);
+  });
+
+
 }
 
 function showAllTodos() {
@@ -95,7 +106,10 @@ function showAllTodos() {
 function createTodo(e) {
   e.preventDefault();
 
+
   if(e.keyCode === 13) {
+
+    if(this.dataset.type === "create") {
       const obj = {
          created_at:new Date().toDateString(),
       };
@@ -109,12 +123,25 @@ function createTodo(e) {
 
       showAllTodos(todos);
 
-      e.target.value = "";
+    } else {
+
+      const updateMapped = todos.map((todo)=>todo.id == this.getAttribute('updateId') ? {...todo, title:e.target.value} : todo);
+      todos = updateMapped;
+      localStorage.setItem('todos' , JSON.stringify(todos));
+      showAllTodos(todos);
+
+      todoInput.setAttribute('data-type' , 'create');
+      todoInput.removeAttribute('updateId');
+
+    }
+
+    e.target.value = "";
+
   }
 }
 
-function deleteTodo(id) { 
-   const filteredTodos = todos.filter((todo)=>todo.id !== id ? todo : "");
+function deleteTodo() { 
+   const filteredTodos = todos.filter((todo)=>todo.id != this.dataset.id ? todo : "");
    todos = filteredTodos;
    localStorage.setItem('todos',JSON.stringify(todos));
    showAllTodos(todos);
@@ -125,6 +152,8 @@ function updateTodo() {
    const findTodos = todos.find(todo=>todo.id===id);
 
    if(findTodos) {
+      todoInput.setAttribute('data-type' , 'update');
+      todoInput.setAttribute('updateId', findTodos.id);
       todoInput.value = findTodos.title;
    }
 }
@@ -172,6 +201,14 @@ function clearTodos() {
      todos = [];
      localStorage.setItem("todos",JSON.stringify(todos));
      showAllTodos(todos);
+}
+
+function openMenu() {
+  const wrapMenus = document.querySelectorAll('.wrap-menu');
+  wrapMenus.forEach((el)=>el.style.display = 'none');
+  const getIndex = Number(this.dataset.index);
+
+  wrapMenus[getIndex].style.display = 'flex';
 }
 
 //event listener

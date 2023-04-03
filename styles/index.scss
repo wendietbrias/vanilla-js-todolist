@@ -149,11 +149,9 @@ $secondary:#d1d8e0;
                         border-radius: 6px;
                         top:10px;
                         background-color: #fff;
-                        display: none;
                         flex-direction: column;
                         align-items:flex-start;
                         box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-                        row-gap:6px;
 
                           button {
                             display: flex;
@@ -162,14 +160,11 @@ $secondary:#d1d8e0;
                             align-items: center;
                             font-size:0.8rem;
                             color:#555;
+                            margin:10px 0;
                              i {
                                 font-size:1rem;
                              }
                           }
-                      }
-
-                      .wrap-menu.active {
-                        display:flex;
                       }
                   }
              }
